@@ -10,6 +10,15 @@ CMD /bin/bash
 RUN yum install -y httpd \
  zip\
  unzip
+ docker run \
+  -u root \
+  --name jenkins_lts \
+  -d \
+  -p 8080:8080 \
+  -v jenkins-data:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v $(which docker):/usr/bin/docker
+  jenkins/jenkins:lts-slim
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
 WORKDIR /var/www/html/
 RUN unzip photogenic.zip
